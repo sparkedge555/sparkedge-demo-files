@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CA Krishna Thakur — Tax, GST & Financial Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #0C1712;
+    --navy-deep: #070D0A;
+    --emerald: #103D2E;
+    --emerald-bright: #1C5C45;
+    --ink: #16261F;
+    --ivory: #F6F1E4;
+    --ivory-dim: #E9E1CB;
+    --gold: #B68A4E;
+    --gold-bright: #D9B273;
+    --copper: #9C6B3F;
+    --slate: #8FA098;
+    --slate-dim: #5B6B61;
+    --line: rgba(217,178,115,0.22);
+    --line-light: rgba(16,38,29,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--navy);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+
+  ::-webkit-scrollbar{ width:13px; height:13px; }
+  ::-webkit-scrollbar-track{
+    background:var(--navy-deep);
+    border-left:1px solid var(--line);
+  }
+  ::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, var(--gold-bright), var(--copper));
+    border:3px solid var(--navy-deep);
+    border-radius:8px;
+    background-clip:padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg, var(--gold-bright), var(--gold));
+    background-clip:padding-box;
+  }
+  ::-webkit-scrollbar-corner{ background:var(--navy-deep); }
+  html{ scrollbar-width:thin; scrollbar-color:var(--gold) var(--navy-deep); }
+  .serif{font-family:'Lora',serif;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px;}
+  @media (max-width:560px){ .wrap{padding:0 20px;} }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ===== NAV ===== */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(7,13,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;gap:12px;}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0;}
+  .brand-seal{
+    width:40px;height:40px;border-radius:50%;
+    border:1.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Lora',serif;font-weight:600;font-size:15px;color:var(--gold-bright);
+    flex-shrink:0;
+  }
+  .brand-name{font-family:'Lora',serif;font-weight:600;font-size:18px;letter-spacing:0.2px;color:var(--ivory);white-space:nowrap;}
+  .brand-tag{font-size:11px;color:var(--slate);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px;white-space:nowrap;}
+  .nav-links{display:flex;gap:36px;align-items:center;}
+  .nav-links a{font-size:14px;color:var(--slate);transition:color 0.2s;}
+  .nav-links a:hover{color:var(--gold-bright);}
+  .nav-cta{
+    border:1px solid var(--gold);color:var(--gold-bright);
+    padding:9px 22px;border-radius:2px;font-size:13px;font-weight:500;
+    letter-spacing:0.3px;transition:all 0.2s;white-space:nowrap;flex-shrink:0;
+  }
+  .nav-cta:hover{background:var(--gold);color:var(--navy-deep);}
+
+  .nav-burger{
+    display:none; flex-shrink:0;
+    width:38px;height:38px; border-radius:4px;
+    background:transparent; border:1px solid rgba(217,178,115,0.3);
+    flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    cursor:pointer; transition:border-color 0.2s, background 0.2s;
+  }
+  .nav-burger:hover{border-color:var(--gold); background:rgba(217,178,115,0.08);}
+  .nav-burger span{
+    width:18px; height:1.5px; background:var(--gold-bright);
+    transition:transform 0.25s, opacity 0.25s;
+  }
+  .nav-burger.is-open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .nav-burger.is-open span:nth-child(2){opacity:0;}
+  .nav-burger.is-open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+  .nav-mobile-panel{
+    display:none;
+    flex-direction:column;
+    background:var(--navy-deep);
+    border-top:1px solid var(--line);
+    overflow:hidden;
+    max-height:0;
+    transition:max-height 0.3s ease;
+  }
+  .nav-mobile-panel.is-open{max-height:280px;}
+  .nav-mobile-panel a{
+    padding:16px 20px; font-size:15px; color:var(--ivory);
+    border-bottom:1px solid var(--line-light);
+  }
+  .nav-mobile-panel a:active{background:rgba(217,178,115,0.08);}
+
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .nav-burger{display:flex;}
+    .nav-mobile-panel{display:flex;}
+  }
+  @media (max-width:480px){
+    nav .wrap{height:68px; gap:8px;}
+    .brand-seal{width:34px;height:34px;font-size:13px;}
+    .brand-name{font-size:14px;}
+    .brand-tag{display:none;}
+    .nav-cta{padding:7px 12px;font-size:11.5px;}
+    .nav-burger{width:34px;height:34px;}
+  }
+  @media (max-width:360px){
+    .brand-name{font-size:13px;max-width:120px;overflow:hidden;text-overflow:ellipsis;}
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    padding:88px 0 96px;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(217,178,115,0.09), transparent),
+      radial-gradient(ellipse 700px 450px at -5% 100%, rgba(28,92,69,0.20), transparent),
+      var(--navy);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(247,243,234,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(247,243,234,0.025) 1px, transparent 1px);
+    background-size:42px 42px;
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:64px;align-items:center;
+  }
+  @media (max-width:900px){ .hero-grid{grid-template-columns:1fr;gap:48px;} }
+
+  .eyebrow{
+    display:flex;align-items:center;gap:10px;
+    font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-bright);
+    margin-bottom:22px;
+    opacity:0; animation:riseIn 0.7s ease-out 0.1s forwards;
+  }
+  .eyebrow .rule{width:28px;height:1px;background:var(--gold);}
+
+  .hero h1{
+    font-family:'Lora',serif;font-weight:600;
+    font-size:50px;line-height:1.12;letter-spacing:-0.5px;
+    color:var(--ivory);
+    margin-bottom:22px;
+    opacity:0; animation:riseIn 0.7s ease-out 0.25s forwards;
+  }
+  .hero h1 em{font-style:italic;color:var(--gold-bright);font-weight:500;}
+  @media (max-width:560px){ .hero h1{font-size:34px;} }
+  @media (max-width:400px){ .hero h1{font-size:29px;} }
+
+  .hero p.lead{
+    font-size:17px;line-height:1.7;color:var(--slate);
+    max-width:480px;margin-bottom:34px;
+    opacity:0; animation:riseIn 0.7s ease-out 0.4s forwards;
+  }
+  @media (max-width:400px){ .hero p.lead{font-size:15.5px;} }
+
+  .hero-ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+    opacity:0; animation:riseIn 0.7s ease-out 0.55s forwards;}
+  .btn-primary{
+    background:var(--gold);color:var(--navy-deep);
+    padding:15px 30px;font-size:14.5px;font-weight:600;
+    letter-spacing:0.3px;border-radius:2px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform 0.2s, background 0.2s;
+  }
+  .btn-primary:hover{background:var(--gold-bright);transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--ivory);padding:15px 26px;font-size:14.5px;font-weight:500;
+    border:1px solid rgba(247,243,234,0.25);border-radius:2px;
+    transition:border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+  @media (max-width:480px){
+    .hero-ctas{flex-direction:column; align-items:stretch; width:100%;}
+    .hero-ctas .btn-primary, .hero-ctas .btn-ghost{justify-content:center; padding:14px 22px; width:100%;}
+  }
+
+  .credentials-row{
+    display:flex;gap:28px;margin-top:48px;flex-wrap:wrap;
+    opacity:0; animation:riseIn 0.7s ease-out 0.7s forwards;
+  }
+  .cred{border-left:1px solid var(--line);padding-left:14px;}
+  .cred .num{font-family:'Lora',serif;font-size:24px;font-weight:600;color:var(--gold-bright);}
+  .cred .lbl{font-size:12px;color:var(--slate);margin-top:2px;letter-spacing:0.2px;}
+  @media (max-width:480px){ .credentials-row{gap:18px 22px;} }
+
+  /* hero card / seal */
+  .hero-card-wrap{position:relative; opacity:0; animation:riseIn 0.8s ease-out 0.5s forwards;}
+  .id-card{
+    background:var(--ivory);
+    border-radius:6px;
+    padding:36px 32px 30px;
+    position:relative;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+  }
+  .id-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:5px;
+    background:linear-gradient(90deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold) 100%);
+    border-radius:6px 6px 0 0;
+  }
+  .id-top{display:flex;gap:18px;align-items:flex-start;margin-bottom:22px;}
+  .id-photo{
+    width:72px;height:72px;border-radius:50%;
+    background:var(--navy);
+    border:2px solid var(--gold);
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Lora',serif;color:var(--gold-bright);font-size:22px;font-weight:600;
+  }
+  .id-name{font-family:'Lora',serif;font-weight:600;font-size:21px;color:var(--ink);line-height:1.25;}
+  .id-role{font-size:13px;color:var(--slate-dim);margin-top:4px;}
+  .id-divider{height:1px;background:var(--line-light);margin:18px 0;}
+  .id-row{display:flex;justify-content:space-between;align-items:flex-start;font-size:13px;padding:8px 0;}
+  .id-row .k{color:var(--slate-dim);}
+  .id-row .v{color:var(--ink);font-weight:500;text-align:right;max-width:60%;}
+  .seal-stamp{
+    position:absolute; top:-18px; right:-18px;
+    width:92px;height:92px;border-radius:50%;
+    background:var(--navy);
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    transform:rotate(-12deg) scale(0.6);
+    opacity:0;
+    animation:stampIn 0.5s cubic-bezier(.2,1.4,.4,1) 1.3s forwards;
+  }
+  .seal-stamp .seal-text{
+    font-family:'Lora',serif;font-size:9.5px;font-weight:600;color:var(--gold-bright);
+    text-align:center;letter-spacing:0.5px;line-height:1.4;
+  }
+  @keyframes stampIn{ to{ transform:rotate(-12deg) scale(1); opacity:1; } }
+  @keyframes riseIn{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+  @media (max-width:480px){
+    .id-card{padding:30px 22px 24px;}
+    .seal-stamp{width:72px;height:72px;top:-14px;right:-10px;}
+    .seal-stamp .seal-text{font-size:8px;}
+    .id-photo{width:60px;height:60px;font-size:18px;}
+    .id-name{font-size:18px;}
+  }
+
+  /* ===== TRUST STRIP ===== */
+  .trust-strip{
+    background:var(--navy-deep);
+    border-bottom:1px solid var(--line);
+    padding:20px 0;
+  }
+  .trust-strip .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;}
+  .trust-item{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--slate);}
+  .trust-item .dot{width:5px;height:5px;border-radius:50%;background:var(--emerald-bright);flex-shrink:0;}
+
+  /* ===== SECTION HEADERS ===== */
+  .section{padding:96px 0;}
+  .section-ivory{background:var(--ivory); color:var(--ink);}
+  .sec-head{max-width:620px;margin-bottom:56px;}
+  @media (max-width:700px){
+    .section{padding:64px 0;}
+    .sec-head{margin-bottom:36px;}
+  }
+  .sec-eyebrow{
+    font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+    margin-bottom:14px;font-weight:600;
+  }
+  .section-ivory .sec-eyebrow{color:var(--copper);}
+  .sec-head h2{font-family:'Lora',serif;font-weight:600;font-size:34px;line-height:1.25;letter-spacing:-0.3px;}
+  .sec-head p{font-size:15.5px;color:var(--slate);margin-top:14px;line-height:1.7;}
+  .section-ivory .sec-head p{color:var(--slate-dim);}
+  @media (max-width:560px){ .sec-head h2{font-size:26px;} }
+
+  /* ===== SERVICES — LEDGER LIST ===== */
+  .ledger{border-top:1px solid var(--line-light);}
+  .ledger-row{
+    display:grid;grid-template-columns:64px 1fr auto;gap:24px;align-items:center;
+    padding:28px 0;border-bottom:1px solid var(--line-light);
+    transition:padding-left 0.25s;
+    cursor:default;
+  }
+  .ledger-row:hover{padding-left:8px; border-bottom-color:var(--gold);}
+  .ledger-code{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--copper);letter-spacing:0.5px;}
+  .ledger-body h3{font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--ink);margin-bottom:5px;}
+  .ledger-body p{font-size:14px;color:var(--slate-dim);line-height:1.6;max-width:520px;}
+  .ledger-arrow{font-size:20px;color:var(--copper);opacity:0.5;transition:opacity 0.25s, transform 0.25s;}
+  .ledger-row:hover .ledger-arrow{opacity:1; transform:translateX(4px);}
+  @media (max-width:700px){
+    .ledger-row{grid-template-columns:40px 1fr; row-gap:8px;}
+    .ledger-arrow{display:none;}
+  }
+
+  /* ===== COMPLIANCE CALENDAR — SIGNATURE ELEMENT ===== */
+  .calendar-section{background:var(--navy-deep);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .cal-strip{
+    display:flex; gap:0; overflow-x:auto;
+    border:1px solid var(--line); border-radius:4px;
+    background:var(--navy);
+  }
+  .cal-cell{
+    flex:1 0 200px;
+    padding:26px 22px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .cal-cell:last-child{border-right:none;}
+  .cal-cell .cal-date{
+    font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gold-bright);
+    margin-bottom:10px; letter-spacing:0.3px;
+  }
+  .cal-cell h4{font-family:'Lora',serif;font-size:16px;font-weight:600;color:var(--ivory);margin-bottom:6px;}
+  .cal-cell p{font-size:12.5px;color:var(--slate);line-height:1.55;}
+  .cal-cell.urgent::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold-bright);
+  }
+  .cal-badge{
+    display:inline-block;margin-top:10px;font-size:10.5px;letter-spacing:0.8px;text-transform:uppercase;
+    color:var(--navy-deep);background:var(--gold-bright);padding:3px 9px;border-radius:2px;font-weight:600;
+  }
+
+  /* ===== PROCESS ===== */
+  .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line-light);border-radius:4px;overflow:hidden;}
+  .process-step{padding:32px 26px;border-right:1px solid var(--line-light);position:relative;}
+  .process-step:last-child{border-right:none;}
+  .process-step .pstep-mark{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--copper);margin-bottom:16px;}
+  .process-step h4{font-family:'Lora',serif;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:8px;}
+  .process-step p{font-size:13px;color:var(--slate-dim);line-height:1.6;}
+  @media (max-width:800px){
+    .process-grid{grid-template-columns:1fr;}
+    .process-step{border-right:none;border-bottom:1px solid var(--line-light);}
+    .process-step:last-child{border-bottom:none;}
+  }
+
+  /* ===== TESTIMONIAL ===== */
+  .testimonial{
+    background:var(--navy); padding:90px 0; border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .testimonial .wrap{max-width:760px;text-align:center;}
+  .testimonial .mark{font-family:'Lora',serif;font-size:56px;color:var(--gold);opacity:0.5;line-height:1;margin-bottom:10px;}
+  .testimonial blockquote{
+    font-family:'Lora',serif;font-style:italic;font-weight:500;font-size:23px;line-height:1.55;
+    color:var(--ivory);margin-bottom:26px;
+  }
+  .testimonial .author{font-size:13.5px;color:var(--slate);}
+  .testimonial .author b{color:var(--gold-bright);font-weight:600;}
+  @media (max-width:600px){
+    .testimonial{padding:64px 0;}
+    .testimonial blockquote{font-size:19px;}
+    .testimonial .mark{font-size:44px;}
+  }
+
+  /* ===== CONTACT / LOCATION ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;gap:40px;} }
+  .info-row{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-light);}
+  .info-row:first-child{padding-top:0;}
+  .info-icon{
+    width:38px;height:38px;border-radius:50%;background:rgba(217,178,115,0.13);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--copper);font-size:16px;
+  }
+  .info-row h5{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;}
+  .info-row p, .info-row a{font-size:14px;color:var(--slate-dim);line-height:1.6;}
+  .hours-table{width:100%;font-size:13.5px;margin-top:4px;}
+  .hours-table td{padding:4px 0;color:var(--slate-dim);}
+  .hours-table td:last-child{text-align:right;color:var(--ink);font-weight:500;}
+
+  .map-frame{
+    background:var(--navy); border-radius:4px; overflow:hidden;
+    border:1px solid var(--line-light); aspect-ratio:4/3;
+    position:relative;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:30px 30px;
+  }
+  .map-pin{
+    position:absolute;top:42%;left:54%;
+    width:34px;height:34px;border-radius:50% 50% 50% 0;
+    background:var(--gold-bright);transform:translate(-50%,-100%) rotate(-45deg);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .map-pin::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--navy-deep);transform:rotate(45deg);}
+  .map-label{
+    position:absolute;bottom:16px;left:16px;font-family:'Lora',serif;font-size:13px;color:var(--ivory);
+    background:rgba(7,13,10,0.72);padding:6px 12px;border-radius:2px;letter-spacing:0.3px;
+  }
+
+  /* ===== FINAL CTA ===== */
+  .final-cta{
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    padding:100px 0; text-align:center;
+  }
+  .final-cta h2{font-family:'Lora',serif;font-weight:600;font-size:38px;color:var(--ivory);margin-bottom:18px;}
+  .final-cta p{font-size:16px;color:var(--slate);max-width:480px;margin:0 auto 36px;line-height:1.7;}
+  @media (max-width:560px){
+    .final-cta{padding:64px 0;}
+    .final-cta h2{font-size:28px;}
+  }
+
+  /* ===== FOOTER ===== */
+  footer{background:var(--navy-deep);padding:48px 0 36px;border-top:1px solid var(--line);}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer .f-brand{font-family:'Lora',serif;font-size:15px;color:var(--ivory);}
+  footer .f-meta{font-size:12.5px;color:var(--slate-dim);}
+
+  /* ===== AGENCY CARD (floating) ===== */
+  .agency-float{
+    position:fixed; bottom:22px; right:22px; z-index:100;
+    background:var(--ivory); color:var(--ink);
+    border-radius:10px; padding:18px 18px 16px;
+    box-shadow:0 20px 50px -14px rgba(0,0,0,0.6);
+    width:280px;
+    border:1px solid rgba(217,178,115,0.45);
+    font-family:'Inter',sans-serif;
+    overflow:hidden;
+    opacity:0; transform:translateY(16px) scale(0.97);
+    pointer-events:none;
+    transition:opacity 0.35s ease, transform 0.35s ease;
+  }
+  .agency-float.is-visible{
+    opacity:1; transform:translateY(0) scale(1);
+    pointer-events:auto;
+  }
+  .agency-float::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg, var(--emerald-bright) 0%, var(--gold-bright) 50%, var(--emerald-bright) 100%);
+  }
+  .agency-float .af-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px; margin-top:2px;}
+  .agency-float .af-badge{
+    font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--copper);
+    font-weight:700;
+  }
+  .agency-float .af-close{
+    cursor:pointer;color:var(--slate-dim);font-size:16px;line-height:1;
+    width:22px;height:22px;display:flex;align-items:center;justify-content:center;
+    border-radius:50%;transition:background 0.15s;
+    margin-top:-4px; margin-right:-4px;
+  }
+  .agency-float .af-close:hover{background:rgba(0,0,0,0.06);}
+  .agency-float p{font-size:13px;line-height:1.55;color:var(--slate-dim);margin-bottom:10px;}
+  .agency-float .af-brand{font-weight:600;color:var(--ink);}
+  .agency-float .af-extra{
+    font-size:11.5px;line-height:1.55;color:var(--slate-dim);
+    background:rgba(16,61,46,0.07);
+    border-left:2px solid var(--emerald-bright);
+    border-radius:0 4px 4px 0;
+    padding:7px 10px; margin-bottom:14px;
+  }
+  .agency-float .af-extra b{color:var(--ink);font-weight:600;}
+  .agency-float .af-btn{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--emerald-bright); color:#EFF7F1; font-size:13.5px;font-weight:600;
+    padding:11px 14px;border-radius:6px; width:100%;
+    transition:background 0.2s, transform 0.2s;
+  }
+  .agency-float .af-btn:hover{background:#164C39; transform:translateY(-1px);}
+  .agency-float .af-link{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    margin-top:9px; font-size:12px; font-weight:600; color:var(--copper);
+    padding:8px 0; border:1px solid rgba(182,138,78,0.4); border-radius:6px;
+    transition:background 0.2s, border-color 0.2s;
+  }
+  .agency-float .af-link:hover{background:rgba(182,138,78,0.08); border-color:var(--copper);}
+  @media (max-width:560px){
+    .agency-float{left:16px; right:16px; bottom:16px; width:auto;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-seal">KT</div>
+      <div>
+        <div class="brand-name">CA Krishna Thakur</div>
+        <div class="brand-tag">Tax &amp; Financial Advisory</div>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#services" class="nav-link-item">Services</a>
+      <a href="#calendar" class="nav-link-item">Deadlines</a>
+      <a href="#process" class="nav-link-item">Process</a>
+      <a href="#contact" class="nav-link-item">Contact</a>
+    </div>
+    <a href="tel:+919142450715" class="nav-cta">Book a consult</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile-panel" id="navMobilePanel">
+    <a href="#services" class="nav-link-item">Services</a>
+    <a href="#calendar" class="nav-link-item">Deadlines</a>
+    <a href="#process" class="nav-link-item">Process</a>
+    <a href="#contact" class="nav-link-item">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="rule"></span> Chartered Accountant · Muzaffarpur, Bihar</div>
+      <h1>Your taxes, filed <em>correctly</em>. Your books, kept <em>clean</em>.</h1>
+      <p class="lead">Income tax returns, GST filing, and financial planning for individuals and small businesses — handled with the care of a professional who answers the phone himself.</p>
+      <div class="hero-ctas">
+        <a href="tel:+919142450715" class="btn-primary">Schedule a consultation →</a>
+        <a href="#services" class="btn-ghost">View services</a>
+      </div>
+      <div class="credentials-row">
+        <div class="cred"><div class="num">10+</div><div class="lbl">Years in practice</div></div>
+        <div class="cred"><div class="num">500+</div><div class="lbl">Returns filed</div></div>
+        <div class="cred"><div class="num">Sat–Mon</div><div class="lbl">10 AM – 6 PM</div></div>
+      </div>
+    </div>
+    <div class="hero-card-wrap">
+      <div class="id-card">
+        <div class="seal-stamp"><div class="seal-text">VERIFIED<br>CA<br>PRACTICE</div></div>
+        <div class="id-top">
+          <div class="id-photo">KT</div>
+          <div>
+            <div class="id-name">Krishna Thakur</div>
+            <div class="id-role">Chartered Accountant</div>
+          </div>
+        </div>
+        <div class="id-divider"></div>
+        <div class="id-row"><span class="k">Practice areas</span><span class="v">Finance, ITR, GST</span></div>
+        <div class="id-row"><span class="k">Office hours</span><span class="v">10:00 AM – 6:00 PM</span></div>
+        <div class="id-row"><span class="k">Location</span><span class="v">Ayachi Gram, Bairiya</span></div>
+        <div class="id-divider"></div>
+        <div class="id-row"><span class="k">Contact</span><span class="v">cathakurkrishna@gmail.com</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="wrap">
+    <div class="trust-item"><span class="dot"></span> Income tax returns</div>
+    <div class="trust-item"><span class="dot"></span> GST registration &amp; filing</div>
+    <div class="trust-item"><span class="dot"></span> Tax planning &amp; advisory</div>
+    <div class="trust-item"><span class="dot"></span> Business compliance</div>
+  </div>
+</div>
+
+<section class="section section-ivory" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">What I handle</div>
+      <h2>Every filing, every deadline, kept in order.</h2>
+      <p>From a first-time salaried return to ongoing GST compliance for a growing business — each service below is something I personally review, not outsourced or templated.</p>
+    </div>
+    <div class="ledger">
+      <div class="ledger-row">
+        <div class="ledger-code">ITR / 01</div>
+        <div class="ledger-body">
+          <h3>Income tax return filing</h3>
+          <p>For salaried individuals, freelancers, and business owners — accurate filing that claims every deduction you're entitled to.</p>
+        </div>
+        <div class="ledger-arrow">→</div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-code">GST / 02</div>
+        <div class="ledger-body">
+          <h3>GST registration &amp; returns</h3>
+          <p>New registrations, monthly and quarterly return filing, and reconciliation so input credit is never left on the table.</p>
+        </div>
+        <div class="ledger-arrow">→</div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-code">ADV / 03</div>
+        <div class="ledger-body">
+          <h3>Tax planning &amp; advisory</h3>
+          <p>Plan ahead of the financial year, not after — structuring income and investments to reduce liability legally.</p>
+        </div>
+        <div class="ledger-arrow">→</div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-code">FIN / 04</div>
+        <div class="ledger-body">
+          <h3>Business &amp; financial consulting</h3>
+          <p>Bookkeeping setup, financial statements, and ongoing advisory for small businesses and shop owners.</p>
+        </div>
+        <div class="ledger-arrow">→</div>
+      </div>
+      <div class="ledger-row">
+        <div class="ledger-code">EDU / 05</div>
+        <div class="ledger-body">
+          <h3>Education &amp; compliance guidance</h3>
+          <p>Plain-language guidance on tax law changes and what they actually mean for your filings.</p>
+        </div>
+        <div class="ledger-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calendar-section section" id="calendar">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Compliance calendar</div>
+      <h2 style="color:var(--ivory);">Deadlines don't wait. Neither should you.</h2>
+      <p>The dates that matter most this season — tracked so you don't have to.</p>
+    </div>
+    <div class="cal-strip">
+      <div class="cal-cell urgent">
+        <div class="cal-date">JUL 31</div>
+        <h4>ITR filing deadline</h4>
+        <p>Last date for individuals not requiring audit, AY 2026–27.</p>
+        <span class="cal-badge">Upcoming</span>
+      </div>
+      <div class="cal-cell">
+        <div class="cal-date">20th, monthly</div>
+        <h4>GSTR-3B due</h4>
+        <p>Summary return and tax payment for the previous month.</p>
+      </div>
+      <div class="cal-cell">
+        <div class="cal-date">11th, monthly</div>
+        <h4>GSTR-1 due</h4>
+        <p>Outward supplies return for regular taxpayers.</p>
+      </div>
+      <div class="cal-cell">
+        <div class="cal-date">Sep 30</div>
+        <h4>Audit report filing</h4>
+        <p>For businesses requiring a tax audit under Section 44AB.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-ivory" id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">How it works</div>
+      <h2>A straightforward path from first call to filed return.</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="pstep-mark">step 1</div>
+        <h4>Share your documents</h4>
+        <p>Send your PAN, income details, and prior filings over WhatsApp or email — no office visit required.</p>
+      </div>
+      <div class="process-step">
+        <div class="pstep-mark">step 2</div>
+        <h4>Review &amp; planning</h4>
+        <p>I review your financials and flag any deductions or compliance gaps before filing.</p>
+      </div>
+      <div class="process-step">
+        <div class="pstep-mark">step 3</div>
+        <h4>Filing</h4>
+        <p>Your return or GST filing is prepared, verified with you, and submitted on the portal.</p>
+      </div>
+      <div class="process-step">
+        <div class="pstep-mark">step 4</div>
+        <h4>Confirmation &amp; records</h4>
+        <p>You receive acknowledgment copies and a clear record for your files.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="wrap">
+    <div class="mark">"</div>
+    <blockquote>Krishna sir filed my GST returns for two years of backlog without a single notice afterward. He explains things in a way that actually makes sense.</blockquote>
+    <div class="author"><b>Rajesh Kumar</b> — Shop owner, Muzaffarpur</div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Get in touch</div>
+      <h2 style="color:var(--ivory);">Visit, call, or write — whichever is easiest.</h2>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <div class="info-row">
+          <div class="info-icon">⌖</div>
+          <div>
+            <h5 style="color:var(--ivory);">Office address</h5>
+            <p style="color:var(--slate);">01, Shiv-Anju Complex, Ayachi Gram, Near Post Office, Bairiya, Muzaffarpur, Bihar</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">✉</div>
+          <div>
+            <h5 style="color:var(--ivory);">Email</h5>
+            <p style="color:var(--slate);">cathakurkrishna@gmail.com</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-icon">◷</div>
+          <div>
+            <h5 style="color:var(--ivory);">Office hours</h5>
+            <table class="hours-table" style="margin-top:8px;">
+              <tr><td style="color:var(--slate);">Saturday – Thursday</td><td style="color:var(--ivory);">10:00 AM – 6:00 PM</td></tr>
+              <tr><td style="color:var(--slate);">Friday</td><td style="color:var(--ivory);">Closed</td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="map-frame">
+        <div class="map-pin"></div>
+        <div class="map-label">Ayachi Gram, Bairiya</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <h2>Ready to file with confidence?</h2>
+    <p>Bring your documents in, or send them over WhatsApp. Most consultations are resolved within a day.</p>
+    <a href="tel:+919142450715" class="btn-primary">Call to schedule →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand">CA Krishna Thakur</div>
+    <div class="f-meta">© 2026 · Ayachi Gram, Bairiya, Muzaffarpur, Bihar</div>
+  </div>
+</footer>
+
+<div class="agency-float" id="agencyCard">
+  <div class="af-top">
+    <span class="af-badge">From Sparkedge</span>
+    <span class="af-close" id="afClose" role="button" aria-label="Close">×</span>
+  </div>
+  <p>This is a free homepage preview built by <span class="af-brand">Sparkedge</span>. Want the complete website — live, with all pages?</p>
+  <div class="af-extra">We also build <b>custom CRM &amp; team management software</b> for internal business operations.</div>
+  <a href="https://wa.me/919142450715" class="af-btn" target="_blank" rel="noopener">
+    Reach out on WhatsApp · 9142450715
+  </a>
+  <a href="https://sparkedge555.github.io/sparkedgeagency/" class="af-link" target="_blank" rel="noopener">
+    Visit sparkedge555.github.io →
+  </a>
+</div>
+
+<script>
+  var burger = document.getElementById('navBurger');
+  var panel = document.getElementById('navMobilePanel');
+  var agencyCard = document.getElementById('agencyCard');
+
+  burger.addEventListener('click', function(){
+    var open = panel.classList.toggle('is-open');
+    burger.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  function closeMobilePanel(){
+    panel.classList.remove('is-open');
+    burger.classList.remove('is-open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+
+  function revealAgencyCard(){
+    agencyCard.classList.add('is-visible');
+  }
+
+  var allPageLinks = document.querySelectorAll('a');
+  for (var i = 0; i < allPageLinks.length; i++){
+    var link = allPageLinks[i];
+    if (agencyCard.contains(link)) continue;
+    link.addEventListener('click', function(){
+      closeMobilePanel();
+      revealAgencyCard();
+    });
+  }
+
+  document.getElementById('afClose').addEventListener('click', function(){
+    agencyCard.classList.remove('is-visible');
+  });
+</script>
+
+</body>
+</html>
